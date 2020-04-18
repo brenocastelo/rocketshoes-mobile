@@ -11,11 +11,13 @@ import {
   BasketCounterText,
 } from './styles';
 
-export default function Header() {
+export default function Header({ navigation }) {
+  console.tron.log('navigation', navigation);
+
   return (
     <Container>
       <Image source={logo} />
-      <BasketContainer>
+      <BasketContainer onPress={() => navigation.navigate('Cart')}>
         <Icon name="shopping-basket" color="#FFF" size={40} />
         <BasketCounter>
           <BasketCounterText>3</BasketCounterText>
