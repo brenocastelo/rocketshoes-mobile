@@ -6,7 +6,9 @@ export const Container = styled.View`
   padding: 10px;
 `;
 
-export const ProductList = styled.FlatList`
+export const ProductList = styled.FlatList.attrs({
+  contentContainerStyle: { paddingBottom: 20 },
+})`
   padding: 10px;
   background-color: #fff;
   border-radius: 4px;
@@ -14,6 +16,7 @@ export const ProductList = styled.FlatList`
 
 export const Product = styled.View`
   border-radius: 4px;
+  margin: 15px 0;
 `;
 
 export const Details = styled.View`

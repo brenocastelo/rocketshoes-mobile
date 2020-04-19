@@ -1,6 +1,10 @@
 import React from 'react';
 import { View } from 'react-native';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+
+import * as CartActions from '../../store/modules/cart/actions';
 
 import {
   Container,
@@ -23,12 +27,12 @@ import {
   FinishOrderButtonLabel,
 } from './styles';
 
-export default function Cart() {
+function Cart({ products, removeFromCart, updateAmount, total }) {
   function renderListFooter() {
     return (
       <Footer>
         <TotalLabel>TOTAL</TotalLabel>
-        <TotalValue>529,99</TotalValue>
+        <TotalValue>{total}</TotalValue>
 
         <FinishOrderButton>
           <FinishOrderButtonLabel>FINALIZAR PEDIDO</FinishOrderButtonLabel>
@@ -41,15 +45,7 @@ export default function Cart() {
     <Container>
       <View>
         <ProductList
-          data={[
-            {
-              id: 1,
-              title: 'Tênis Couro Masculino para usar daasdadadadad',
-              image:
-                'https://rocketseat-cdn.s3-sa-east-1.amazonaws.com/modulo-redux/tenis1.jpg',
-              price: 129.99,
-            },
-          ]}
+          data={products}
           keyExtractor={product => String(product.id)}
           renderItem={({ item }) => (
             <Product>
@@ -63,25 +59,30 @@ export default function Cart() {
                   <Title>{item.title}</Title>
                   <Price>{item.price}</Price>
                 </TextContainer>
-                <ActionButton>
+                <ActionButton onPress={() => removeFromCart(item.id)}>
                   <Icon name="delete-forever" size={30} color="#7159c1" />
                 </ActionButton>
               </Details>
               <TotalContainer>
                 <QuantityContainer>
-                  <ActionButton>
+                  <ActionButton
+                    disabled={item.amount === 0}
+                    onPress={() => updateAmount(item.id, item.amount - 1)}
+                  >
                     <Icon
                       name="remove-circle-outline"
                       size={30}
                       color="#7159c1"
                     />
                   </ActionButton>
-                  <Input value={String(3)} />
-                  <ActionButton>
+                  <Input value={String(item.amount)} />
+                  <ActionButton
+                    onPress={() => updateAmount(item.id, item.amount + 1)}
+                  >
                     <Icon name="add-circle-outline" size={30} color="#7159c1" />
                   </ActionButton>
                 </QuantityContainer>
-                <Subtotal>538,98</Subtotal>
+                <Subtotal>{item.subtotal}</Subtotal>
               </TotalContainer>
             </Product>
           )}
@@ -91,3 +92,18 @@ export default function Cart() {
     </Container>
   );
 }
+
+const mapStateToProps = state => ({
+  products: state.cart.map(product => ({
+    ...product,
+    subtotal: product.amount * product.price,
+  })),
+  total: state.cart.reduce((total, product) => {
+    return total + product.price * product.amount;
+  }, 0),
+});
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(CartActions, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(Cart);

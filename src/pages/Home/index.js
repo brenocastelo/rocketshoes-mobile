@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
+import { connect } from 'react-redux';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
+import * as CartActions from '../../store/modules/cart/actions';
 import api from '../../services/api';
 import { formatPrice } from '../../utils/formats';
 
@@ -37,8 +39,15 @@ class Home extends Component {
     this.setState({ products });
   };
 
+  handleAddProduct = product => {
+    const { dispatch } = this.props;
+
+    dispatch(CartActions.addToCart(product));
+  };
+
   render() {
     const { products } = this.state;
+    const { amount } = this.props;
     return (
       <Container>
         <View>
@@ -50,10 +59,10 @@ class Home extends Component {
                 <Image source={{ uri: item.image }} />
                 <Title>{item.title}</Title>
                 <Price>{item.formattedPrice}</Price>
-                <AddButtom>
+                <AddButtom onPress={() => this.handleAddProduct(item)}>
                   <CounterContainer>
                     <Icon name="add-shopping-cart" color="#fff" size={18} />
-                    <CounterText>1</CounterText>
+                    <CounterText>{amount[item.id] || 0}</CounterText>
                   </CounterContainer>
                   <AddButtomText>ADICIONAR</AddButtomText>
                 </AddButtom>
@@ -66,4 +75,12 @@ class Home extends Component {
   }
 }
 
-export default Home;
+const mapStateToProps = state => ({
+  amount: state.cart.reduce((amount, product) => {
+    amount[product.id] = product.amount;
+
+    return amount;
+  }, {}),
+});
+
+export default connect(mapStateToProps)(Home);
