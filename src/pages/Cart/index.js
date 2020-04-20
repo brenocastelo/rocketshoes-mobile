@@ -27,24 +27,19 @@ import {
   TotalValue,
   FinishOrderButton,
   FinishOrderButtonLabel,
+  EmptyCartMessage,
 } from './styles';
 
 function Cart({ products, removeFromCart, updateAmountRequest, total }) {
   function renderListFooter() {
-    const isEmpty = products.length;
+    if (!products.lenght) return;
 
     return (
       <Footer>
-        {isEmpty ? (
-          <>
-            <TotalLabel>TOTAL</TotalLabel>
-            <TotalValue>{total}</TotalValue>
-          </>
-        ) : (
-          <TotalLabel>Cart is empty</TotalLabel>
-        )}
+        <TotalLabel>TOTAL</TotalLabel>
+        <TotalValue>{total}</TotalValue>
 
-        <FinishOrderButton disabled={!isEmpty}>
+        <FinishOrderButton>
           <FinishOrderButtonLabel>FINALIZAR PEDIDO</FinishOrderButtonLabel>
         </FinishOrderButton>
       </Footer>
@@ -101,6 +96,9 @@ function Cart({ products, removeFromCart, updateAmountRequest, total }) {
             </Product>
           )}
           ListFooterComponent={renderListFooter()}
+          ListEmptyComponent={() => (
+            <EmptyCartMessage>Seu carrinho está vazio :(</EmptyCartMessage>
+          )}
         />
       </View>
     </Container>

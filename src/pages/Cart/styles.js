@@ -98,6 +98,10 @@ export const TotalValue = styled.Text`
   font-weight: bold;
 `;
 
+export const EmptyCartMessage = styled(TotalLabel)`
+  color: #333;
+`;
+
 export const FinishOrderButton = styled.TouchableOpacity`
   background-color: ${({ disabled }) =>
     disabled ? lighten(0.2, '#7159c1') : '#7159c1'};
