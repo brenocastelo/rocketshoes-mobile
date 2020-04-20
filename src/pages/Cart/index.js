@@ -32,7 +32,7 @@ import {
 
 function Cart({ products, removeFromCart, updateAmountRequest, total }) {
   function renderListFooter() {
-    if (!products.lenght) return;
+    if (!products.length) return;
 
     return (
       <Footer>
