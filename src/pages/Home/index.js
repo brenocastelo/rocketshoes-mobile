@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import * as CartActions from '../../store/modules/cart/actions';
@@ -40,9 +41,9 @@ class Home extends Component {
   };
 
   handleAddProduct = product => {
-    const { dispatch } = this.props;
+    const { addToCartRequest } = this.props;
 
-    dispatch(CartActions.addToCart(product));
+    addToCartRequest(product.id);
   };
 
   render() {
@@ -83,4 +84,7 @@ const mapStateToProps = state => ({
   }, {}),
 });
 
-export default connect(mapStateToProps)(Home);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(CartActions, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

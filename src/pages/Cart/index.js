@@ -6,6 +6,8 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import * as CartActions from '../../store/modules/cart/actions';
 
+import { formatPrice } from '../../utils/formats';
+
 import {
   Container,
   ProductList,
@@ -27,14 +29,22 @@ import {
   FinishOrderButtonLabel,
 } from './styles';
 
-function Cart({ products, removeFromCart, updateAmount, total }) {
+function Cart({ products, removeFromCart, updateAmountRequest, total }) {
   function renderListFooter() {
+    const isEmpty = products.length;
+
     return (
       <Footer>
-        <TotalLabel>TOTAL</TotalLabel>
-        <TotalValue>{total}</TotalValue>
+        {isEmpty ? (
+          <>
+            <TotalLabel>TOTAL</TotalLabel>
+            <TotalValue>{total}</TotalValue>
+          </>
+        ) : (
+          <TotalLabel>Cart is empty</TotalLabel>
+        )}
 
-        <FinishOrderButton>
+        <FinishOrderButton disabled={!isEmpty}>
           <FinishOrderButtonLabel>FINALIZAR PEDIDO</FinishOrderButtonLabel>
         </FinishOrderButton>
       </Footer>
@@ -57,7 +67,7 @@ function Cart({ products, removeFromCart, updateAmount, total }) {
                 />
                 <TextContainer>
                   <Title>{item.title}</Title>
-                  <Price>{item.price}</Price>
+                  <Price>{item.formattedPrice}</Price>
                 </TextContainer>
                 <ActionButton onPress={() => removeFromCart(item.id)}>
                   <Icon name="delete-forever" size={30} color="#7159c1" />
@@ -67,7 +77,9 @@ function Cart({ products, removeFromCart, updateAmount, total }) {
                 <QuantityContainer>
                   <ActionButton
                     disabled={item.amount === 0}
-                    onPress={() => updateAmount(item.id, item.amount - 1)}
+                    onPress={() =>
+                      updateAmountRequest(item.id, item.amount - 1)
+                    }
                   >
                     <Icon
                       name="remove-circle-outline"
@@ -77,7 +89,9 @@ function Cart({ products, removeFromCart, updateAmount, total }) {
                   </ActionButton>
                   <Input value={String(item.amount)} />
                   <ActionButton
-                    onPress={() => updateAmount(item.id, item.amount + 1)}
+                    onPress={() =>
+                      updateAmountRequest(item.id, item.amount + 1)
+                    }
                   >
                     <Icon name="add-circle-outline" size={30} color="#7159c1" />
                   </ActionButton>
@@ -96,11 +110,13 @@ function Cart({ products, removeFromCart, updateAmount, total }) {
 const mapStateToProps = state => ({
   products: state.cart.map(product => ({
     ...product,
-    subtotal: product.amount * product.price,
+    subtotal: formatPrice(product.amount * product.price),
   })),
-  total: state.cart.reduce((total, product) => {
-    return total + product.price * product.amount;
-  }, 0),
+  total: formatPrice(
+    state.cart.reduce((total, product) => {
+      return total + product.price * product.amount;
+    }, 0)
+  ),
 });
 
 const mapDispatchToProps = dispatch =>

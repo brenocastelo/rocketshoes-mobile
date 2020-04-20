@@ -1,4 +1,5 @@
 import styled from 'styled-components/native';
+import { lighten } from 'polished';
 
 export const Container = styled.View`
   flex: 1;
@@ -98,7 +99,8 @@ export const TotalValue = styled.Text`
 `;
 
 export const FinishOrderButton = styled.TouchableOpacity`
-  background-color: #7159c1;
+  background-color: ${({ disabled }) =>
+    disabled ? lighten(0.2, '#7159c1') : '#7159c1'};
   border-radius: 4px;
   padding: 10px 0;
   margin-top: 20px;
