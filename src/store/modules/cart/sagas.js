@@ -45,7 +45,7 @@ function* updateAmount({ id, amount }) {
   const stockAmount = stock.data.amount;
 
   if (amount > stockAmount) {
-    Alert.alert('Quantity out of stock');
+    Alert.alert('Quantidade fora de estoque');
     return;
   }
 
