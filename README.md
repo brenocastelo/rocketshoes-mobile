@@ -8,19 +8,19 @@
 
 <!-- ABOUT THE PROJECT -->
 
-## Sobre o Projeto
+## About
 
-Esta aplicação é um aplicativo com um simples fluxo de adicionar produtos em um carrinho de compras para demostrar a utilização de gerenciamento de estados globais com as bibliotecas Redux e Redux Saga.
+This app is a simple shop "add to cart" flow, to show the use of global state management with Redux and Redux-Saga libs in React Native.
 
-### Princimais tecnologias
+### Main technologies
 
 Abaixo segue o que foi utilizado na criação deste template:
 
-- [React Native](http://facebook.github.io/react-native/): React Native é um framework que permite o desenvolvimento de aplicações mobile usando Javascript e React;
-- [React Navigation](https://reactnavigation.org/): Biblioteca que permite a a navegação entre telas da aplicação
-- [Axios](https://github.com/axios/axios): O Axios é um cliente HTTP baseado em Promises para Browser e NodeJS;
-- [Redux](https://redux.js.org/): O Redux é um contêiner de estado previsível para aplicativos JavaScript. Ele ajuda você a escrever aplicativos que se comportam consistentemente, executados em diferentes ambientes (cliente, servidor e nativo) e são fáceis de testar;
-  - [Redux Saga](https://redux-saga.js.org/): Plugin que permite você percorrer uma saga na sua aplicação, e trabalhar com efeitos colaterias assíncronos, como: chamadas de API's, acesso a bancos de dados, etc.
+- [React Native](http://facebook.github.io/react-native/) is a framework that allows the development of native mobile apps with JavaScript.
+- [React Navigation](https://reactnavigation.org/) is a library used for navigate between app's screens
+- [Axios](https://github.com/axios/axios) is a Promise based HTTP client for the browser and node.js
+- [Redux](https://redux.js.org/): Redux is a predictable state container for JavaScript apps.
+  - [Redux Saga](https://redux-saga.js.org/): is a library that aims to make application side effects (i.e. asynchronous things like data fetching and impure things like accessing the browser cache) easier to manage, more efficient to execute, easy to test, and better at handling failures.
 
 <!-- DEMO -->
 
@@ -32,16 +32,17 @@ Abaixo segue o que foi utilizado na criação deste template:
 
 <!-- RUN -->
 
-## Executar aplicação
+## Run
 
-1. Faça um clone do projeto
-2. Execute `yarn` (ou `npm install`)
-3. Execute `yarn start` (ou `npm start`)
-4. Execute `yarn` (ou `npm run`) json-server server.json -p 3333
+1. Clone this project
+2. Run `yarn` (or `npm install`)
+3. Run `reactinative run-android` (or `run-ios` id you'll test on IOS)
+3. Run `yarn start` (ou `npm start`)
+4. Run `yarn` (or `npm run`) json-server server.json -p 3333
 5. Have fun :)
 
 <!-- CONTACT -->
 
-## Contato
+## Contact
 
 Breno Castelo Branco - [Github](https://github.com/brenocastelo) - **breno.cbsousa@gmail.com**
